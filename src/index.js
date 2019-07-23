@@ -1,89 +1,44 @@
-// import React from 'react';
-// import L from 'leaflet';
-import ReactDOM from 'react-dom';
-
-
-// class App extends React.Component {
-//   state = { markerPosition: { lat: 49.8419, lng: 24.0315 } };
-//   moveMarker = () => {
-//     const { lat, lng } = this.state.markerPosition;
-//     this.setState({
-//       markerPosition: {
-//         lat: lat + 0.0001,
-//         lng: lng + 0.0001, 
-//       }
-//     });
-//   };
-//   render() {
-//     const { markerPosition } = this.state;
-//     return (
-//       <div>
-//         <Map markerPosition={markerPosition} />
-//         <div>Current markerPosition: lat: {markerPosition.lat}, lng: {markerPosition.lng}</div>
-//         <button
-//           onClick={this.moveMarker}
-//         >
-//           Move marker
-//         </button>
-//       </div>
-//     );
-//   }
-// }
-
-
-// class Map extends React.Component {
-//   componentDidMount() {
-//     // create map
-//     this.map = L.map("map").setView([44.477299, -73.213094], 16);
-//     L.tileLayer("https://{s}.tile.OpenStreetMap.org/{z}/{x}/{y}.png", {
-//       attribution:
-//         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-//     }).addTo(this.map);
-//   }
-
-//   render() {
-//     return <div style={mapStyle} id="map"></div>
-//   }
-// }
-
-// const mapStyle={
-//   width: '100%',
-//   height: '200px',
-// }
-
-// ReactDOM.render(<App />, document.getElementById('root'));
-
-import { render } from 'react-dom';
+import { render } from "react-dom";
 import React from "react";
 import L from "leaflet";
 
 const style = {
   width: "100%",
-  height: "200px"
+  height: "400px"
 };
 
 class App extends React.Component {
-  state = { markerPosition: { lat: 49.8419, lng: 24.0315 } };
-  moveMarker = () => {
-    const { lat, lng } = this.state.markerPosition;
-    this.setState({
-      markerPosition: {
-        lat: lat + 0.0001,
-        lng: lng + 0.0001, 
-      }
+  constructor(props) {
+    super(props);
+
+    this.handler = this.handler.bind(this);
+  }
+  state = { mapPosition: { lat: 49.8419, lng: 24.0315 } };
+  handler = (direction) => {
+    return this.setState({
+      mapPosition:  direction 
     });
   };
+  
   render() {
-    const { markerPosition } = this.state;
+    let north ={lat:1, lng:0}
+    let east ={lat:0, lng:1}
+    let south ={lat:-1, lng:0}
+    let west ={lat:0, lng:-1}
+    console.log(this.handler);
+    console.log(this.state.mapPosition);
+
     return (
       <div>
-        <Map markerPosition={markerPosition} />
-        <div>Current markerPosition: lat: {markerPosition.lat}, lng: {markerPosition.lng}</div>
-        <button
-          onClick={this.moveMarker}
-        >
-          Move marker
-        </button>
+        <Map mapPosition={this.state.mapPosition} />
+        <Button direction={north} mapPosition={this.state.mapPosition} handler={this.handler} />
+        <Button direction={east} mapPosition={this.state.mapPosition} handler={this.handler} />
+        <Button direction={south} mapPosition={this.state.mapPosition} handler={this.handler} />
+        <Button direction={west} mapPosition={this.state.mapPosition} handler={this.handler} />
+        <div>
+          Current mapPosition: lat: {this.state.mapPosition.lat}, lng:{" "}
+          {this.state.mapPosition.lng}
+        </div>
       </div>
     );
   }
@@ -91,9 +46,10 @@ class App extends React.Component {
 
 class Map extends React.Component {
   componentDidMount() {
+    console.log(this.props.mapPosition);
     // create map
     this.map = L.map("map", {
-      center: [49.8419, 24.0315],
+      center: [this.props.mapPosition.lat, this.props.mapPosition.lng],
       zoom: 16,
       layers: [
         L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
@@ -102,23 +58,30 @@ class Map extends React.Component {
         })
       ]
     });
-
-    // add marker
-    this.marker = L.marker(this.props.markerPosition).addTo(this.map);
   }
-  componentDidUpdate({ markerPosition }) {
+  componentDidUpdate({ mapPosition }) {
     // check if position has changed
-    if (this.props.markerPosition !== markerPosition) {
-      this.marker.setLatLng(this.props.markerPosition);
+    if (this.props.mapPosition !== mapPosition) {
+      this.map.panTo(this.props.mapPosition);
     }
   }
   render() {
-    return (
-    // <div id="mapContanier" style={style}>
-      <div id="map" style={style} />);
-    // </div>);
+    return <div id="map" style={style} />;
   }
 }
 
+class Button extends React.Component {
 
-render(<App />, document.getElementById('root'));
+render(){
+  return (
+    <button
+      onClick={() => {
+        this.props.handler({lat: this.props.mapPosition.lat+this.props.direction.lat, lng: this.props.mapPosition.lng+this.props.direction.lng})}}
+    >
+      move
+    </button>
+  );
+}
+};
+
+render(<App />, document.getElementById("root"));
