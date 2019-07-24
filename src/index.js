@@ -2,9 +2,10 @@ import { render } from "react-dom";
 import React from "react";
 import L from "leaflet";
 
-const style = {
+const mapStyle = {
   width: "100%",
-  height: "400px"
+  height: "400px",
+  pointerEvents: 'none'
 };
 
 class App extends React.Component {
@@ -51,6 +52,7 @@ class Map extends React.Component {
     this.map = L.map("map", {
       center: [this.props.mapPosition.lat, this.props.mapPosition.lng],
       zoom: 16,
+      zoomControl: false,
       layers: [
         L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
           attribution:
@@ -66,7 +68,7 @@ class Map extends React.Component {
     }
   }
   render() {
-    return <div id="map" style={style} />;
+    return <div id="map" style={mapStyle} />;
   }
 }
 
