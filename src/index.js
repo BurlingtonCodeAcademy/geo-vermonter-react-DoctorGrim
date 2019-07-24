@@ -2,6 +2,7 @@ import { render } from "react-dom";
 import React from "react";
 import L from "leaflet";
 import borderData from "./border.js";
+import countyData from "./vtcountyborder";
 import leafletPip from "@mapbox/leaflet-pip";
 
 
@@ -57,7 +58,7 @@ class App extends React.Component {
   
 
   handler = (direction, points) => {
-    console.log(points)
+  
     return this.setState({
       mapPosition: direction,
       points: points-1
@@ -69,8 +70,7 @@ class App extends React.Component {
     let east = { lat: 0, lng: 1 };
     let south = { lat: -1, lng: 0 };
     let west = { lat: 0, lng: -1 };
-    console.log(this.handler);
-    console.log(this.state.mapPosition);
+
 
     return (
       <div>
@@ -126,6 +126,8 @@ class Map extends React.Component {
     });
     this.borderData = L.geoJSON(borderData);
     this.borderData.addTo(this.map);
+    this.countyData =L.geoJSON(countyData);
+    this.countyData.addTo(this.map);
   }
   componentDidUpdate({ mapPosition }) {
     // check if position has changed
