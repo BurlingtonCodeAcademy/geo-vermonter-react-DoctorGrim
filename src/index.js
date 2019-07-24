@@ -42,6 +42,22 @@ return { lat: latRand, lng: lngRand }
 
 let randStart = genmerateRandStart(vtMinLat, vtMaxLat, vtMinLng, vtMaxLng);
 
+let countyData2 =L.geoJSON(countyData);
+
+function guess(county, start){
+  
+  const layerLength2 = leafletPip.pointInLayer(
+    [start.lat, start.lng],
+    countyData2
+  ).length;
+
+  if (layerLength2){
+    console.log('you win!');
+  }else{
+    console.log('you lose')
+  }
+}
+
 
 class App extends React.Component {
   constructor(props) {
@@ -52,7 +68,8 @@ class App extends React.Component {
   state = {
     mapPosition: randStart,
     corectCounty: "county",
-    points: 10
+    points: 10,
+    startPositon: randStart
   };
 
   
@@ -104,6 +121,22 @@ class App extends React.Component {
           Current mapPosition: lat: {this.state.mapPosition.lat}, lng:{" "}
           {this.state.mapPosition.lng}
         </div>
+        <ul>
+          <li><button onClick={guess('ADDISON',this.state.startPositon)}>Addison</button></li>
+          <li><button>Bennington</button></li>
+          <li><button>Caledonia</button></li>
+          <li><button>Chittenden</button></li>
+          <li><button>Essex</button></li>
+          <li><button>Franklin</button></li>
+          <li><button>Grand Isle</button></li>
+          <li><button>Lamoille</button></li>
+          <li><button>Orange</button></li>
+          <li><button>Orleans</button></li>
+          <li><button>Rutland</button></li>
+          <li><button>Washington</button></li>
+          <li><button>Windham</button></li>
+          <li><button>Windsor</button></li>
+        </ul>
       </div>
     );
   }
