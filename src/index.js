@@ -1,8 +1,8 @@
 import { render } from "react-dom";
 import React from "react";
 import L from "leaflet";
-import borderData from "./border.js";
-import countyData from "./vtcountyborder";
+import borderData from "./borders/border.js";
+import countyData from "./borders/vtcountyborder.js";
 import leafletPip from "@mapbox/leaflet-pip";
 
 
@@ -44,19 +44,26 @@ let randStart = genmerateRandStart(vtMinLat, vtMaxLat, vtMinLng, vtMaxLng);
 
 let countyData2 =L.geoJSON(countyData);
 
-function guess(county, start){
+// function guess(county, start){
   
-  const layerLength2 = leafletPip.pointInLayer(
-    [start.lat, start.lng],
-    countyData2
-  ).length;
+//   const layerCounty = leafletPip.pointInLayer(
+//     [start.lat, start.lng],
+//     countyData2
+//   )
 
-  if (layerLength2){
-    console.log('you win!');
-  }else{
-    console.log('you lose')
-  }
-}
+//   const layerCountyLength = layerCounty.length;
+
+//   if (layerCountyLength ){
+//     console.log('you win!');
+//   }else{
+//     console.log('you lose')
+//   }
+// }
+
+// const layerCounty = leafletPip.pointInLayer(
+//   [randStart.lat, randStart.lng],
+//   countyData2
+// );
 
 
 class App extends React.Component {
@@ -66,13 +73,18 @@ class App extends React.Component {
     this.handler = this.handler.bind(this);
   }
   state = {
-    mapPosition: randStart,
+    mapPosition: { lat: 43, lng: -71 },
     corectCounty: "county",
     points: 10,
-    startPositon: randStart
+    startPositon: { lat: 43, lng: -71 },
+    //startingCounty: layerCounty[0].feature.properties.CNTYNAME,
   };
 
-  
+  guess = (county)=> { if(county === this.state.startingCounty){
+    console.log('you win')
+  }else{
+    console.log('you lose');
+  }}
 
   handler = (direction, points) => {
   
@@ -122,7 +134,7 @@ class App extends React.Component {
           {this.state.mapPosition.lng}
         </div>
         <ul>
-          <li><button onClick={guess('ADDISON',this.state.startPositon)}>Addison</button></li>
+          <li><button onClick={this.guess('ADDISON')}>Addison</button></li>
           <li><button>Bennington</button></li>
           <li><button>Caledonia</button></li>
           <li><button>Chittenden</button></li>
@@ -149,7 +161,7 @@ class Map extends React.Component {
     this.map = L.map("map", {
       center: [this.props.mapPosition.lat, this.props.mapPosition.lng],
       zoom: 15,
-      zoomControl: false,
+      zoomControl: true,
       layers: [
         L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
           attribution:
@@ -158,9 +170,9 @@ class Map extends React.Component {
       ]
     });
     this.borderData = L.geoJSON(borderData);
+    this.borderData.setStyle({fill: false})
     this.borderData.addTo(this.map);
-    this.countyData =L.geoJSON(countyData);
-    this.countyData.addTo(this.map);
+    ;
   }
   componentDidUpdate({ mapPosition }) {
     // check if position has changed
