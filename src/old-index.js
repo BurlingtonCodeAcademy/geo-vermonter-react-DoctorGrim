@@ -159,7 +159,7 @@ class Map extends React.Component {
     console.log(this.props.mapPosition);
     // create map
     this.map = L.map("map", {
-      center: [this.props.mapPosition.lat, this.props.mapPosition.lng],
+      center: [this.props.mapPosition.lat, this.props.mapPosition.long],
       zoom: 15,
       zoomControl: true,
       layers: [

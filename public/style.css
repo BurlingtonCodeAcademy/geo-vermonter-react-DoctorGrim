@@ -1,4 +1,14 @@
+*{
+    border-radius: 10px;
+    padding: 5px;
+}
+
 #map{
     width: 200px;
     height: 200px;
+}
+
+div{
+    border: 5px blue;
+    outline: 50px blue;
 }

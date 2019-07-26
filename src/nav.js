@@ -1,7 +1,10 @@
 import React from 'react';
 
 const Nav=({props})=>{
-     return <h1>{props.value}</h1>; 
+
+
+
+     return <div>{props}</div>
 }
 
 
