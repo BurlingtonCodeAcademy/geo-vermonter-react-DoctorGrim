@@ -2,51 +2,65 @@ import { render } from "react-dom";
 import React from "react";
 import Map from "./map.js";
 import CountySelector from "./county-selecter.js";
-import Start from "./start.js";
+import GameSettings from "./start-menu.js";
 import Stats from "./stats.js";
 import MapNav from "./map-nav.js";
-import Nav from "./nav";
-import borderData from "./borders/border.js";
-import countyData from "./borders/vtcountyborder.js";
-import leafletPip from "@mapbox/leaflet-pip";
+import GameNav from "./game-nav.js";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
 
-    // this.moveMap = this.moveMap.bind(this);
+    this.state = {
+      mapPosition: { lat: 44, long: -72 },
+      corectCounty: "county",
+      startPosition: { lat: 44, long: -72 },
+      score: 100,
+      mapZoom: 7,
+      gameStatus: "start"
+      //history array??
+    };
   }
 
-  state = {
-    mapPosition: { lat: 44, long: -72 },
-    corectCounty: "county",
-    points: 10,
-    startPositon: { lat: 44, long: -72 },
+  //starts game at random location with low zoom and sets the corect county and resets score
+startGame = (randomPosition, startCounty)=>{
+  return this.setState({
+    startPosition: randomPosition,
+    mapPosition: randomPosition,
     score: 100,
-    mapZoom: 7,
-    gameStatus: "start"
+    mapZoom: 15,
+    corectCounty: startCounty,
+  });
+}
+
+  scoreChainge = () => {
+    const lastScore = this.state.score;
+    return this.setState({ score: lastScore - 1 });
   };
 
-  moveMap = (direction) => {
+  moveMap = direction => {
     const lastPosition = this.state.mapPosition;
     return this.setState({
       mapPosition: {
-        lat: lastPosition.lat + direction.lat,
-        long: lastPosition.long + direction.long
+        lat: direction.lat,
+        long: direction.long
       }
     });
   };
 
   render() {
+    console.log(this.state.mapPosition)
     return (
       <div>
-        <Nav props={`mapPosition, ${this.state.score}`} />
-        <Start props={"intial sate"} />
+        <GameNav props={`mapPosition, ${this.state.score}`} />
+        <GameSettings startGame={this.startGame} />
         <Stats props={`score, county, start psoition`} />
         <Map mapPosition={this.state.mapPosition} />
         <MapNav
           moveMap={this.moveMap}
-          onClick={()=>this.setState({score: -1})}
+          scoreChainge={this.scoreChainge}
+          startPosition={this.state.startPosition}
+          mapPosition={this.state.mapPosition}
         />
         <CountySelector props={"county, gameStatus"} />
       </div>

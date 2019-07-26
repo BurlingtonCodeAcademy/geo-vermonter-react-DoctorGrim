@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Nav=({props})=>{
+const GameNav=({props})=>{
 
 
 
@@ -9,4 +9,4 @@ const Nav=({props})=>{
 
 
 
-export default Nav;
+export default GameNav;
