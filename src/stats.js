@@ -1,12 +1,15 @@
-import React from 'react'
+import React from "react";
 
-const Stats=({props})=>{
-
-    return <div>
-        
+const Stats = ({ score, county, isGamePlaying }) => {
+  console.log(isGamePlaying);
+  
+    return (
+    <div>
+      <p>score: {score}</p>
+      <p hidden = {!isGamePlaying}>county: ?</p>
+      <p hidden = {isGamePlaying}>county: {county}</p>
     </div>
-
-}
-
+  );
+};
 
 export default Stats;

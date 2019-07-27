@@ -4,7 +4,7 @@ import countyData from "./borders/vtcountyborder.js";
 import leafletPip from "@mapbox/leaflet-pip";
 import L from "leaflet";
 
-const GameSettings = ({ startGame }) => {
+const GameSettings = ({ startGame, giveUp, isGamePlaying }) => {
   //   let countyData2 =L.geoJSON(countyData);
 
   const getRandomStart = () => {
@@ -14,6 +14,7 @@ const GameSettings = ({ startGame }) => {
     const vtMaxLat = 45.00706691759828;
 
     let vtBorderData = L.geoJSON(borderData);
+    console.log(vtBorderData)
 
     let latRand = Math.random() * (vtMaxLat - vtMinLat) + vtMinLat;
     let longRand = Math.random() * (vtMaxLong - vtMinLong) + vtMinLong;
@@ -24,9 +25,6 @@ const GameSettings = ({ startGame }) => {
       vtBorderData
     ).length;
 
-    console.log(latRand+" "+longRand)
-console.log(layerLength)
-console.log(startGame)
     if (layerLength) {
         return { lat: latRand, long: longRand };
     } else {
@@ -34,17 +32,31 @@ console.log(startGame)
     }
   };
 
+
+  const getCounty=(location)=>{
+
+    let vtCountyData = L.geoJSON(countyData);
+
+    let test=leafletPip.pointInLayer(
+        [location.long, location.lat],
+        vtCountyData)
+
+        return test[0].feature.properties.CNTYNAME
+    };
+
+
   return (
     <div>
-      <button
+      <button disabled={isGamePlaying}
         onClick={() => {
           let randomPosition = getRandomStart();
-          console.log(randomPosition);
-          startGame(randomPosition, "startCounty");
+          let startCounty = getCounty(randomPosition);
+          startGame(randomPosition, startCounty);
         }}
       >
         start
       </button>
+      <button disabled={!isGamePlaying} onClick={()=>giveUp()}>Give Up</button>
     </div>
   );
 };

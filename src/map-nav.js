@@ -1,10 +1,10 @@
 import React from "react";
 
 const MapNav = ({ moveMap, scoreChainge, startPosition, mapPosition }) => {
-  const north = { lat: mapPosition.lat + 1, long: mapPosition.long };
-  const south = { lat: mapPosition.lat - 1, long: mapPosition.long };
-  const east = { lat: mapPosition.lat, long: mapPosition.long + 1 };
-  const west = { lat: mapPosition.lat, long: mapPosition.long - 1 };
+  const north = { lat: mapPosition.lat + 0.01, long: mapPosition.long };
+  const south = { lat: mapPosition.lat - 0.01, long: mapPosition.long };
+  const east = { lat: mapPosition.lat, long: mapPosition.long + 0.01 };
+  const west = { lat: mapPosition.lat, long: mapPosition.long - 0.01 };
   return (
     <div>
       <button
