@@ -25,13 +25,14 @@ class App extends React.Component {
 
   //starts game at random location with low zoom and sets the correct county and resets score
   startGame = (randomPosition, startCounty) => {
+    console.log(randomPosition);
     return this.setState({
-      startPosition: randomPosition,
-      mapPosition: randomPosition,
       score: 100,
       mapZoom: 15,
       corectCounty: startCounty,
-      gameStatus: true
+      gameStatus: true,
+      startPosition: randomPosition,
+      mapPosition: randomPosition,
     });
   };
 
