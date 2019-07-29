@@ -3,22 +3,21 @@ import React from 'react'
 const CountySelector=({guessCounty, isGamePlaying})=>{
 
     return <div hidden={!isGamePlaying}>
-        <ul>
-          <li><button onClick={()=>guessCounty('ADDISON')}>Addison</button></li>
-          <li><button onClick={()=>guessCounty('BENNINGTON')}>Bennington</button></li>
-          <li><button onClick={()=>guessCounty('CALEDONIA')}>Caledonia</button></li>
-          <li><button onClick={()=>guessCounty('CHITTENDEN')}>Chittenden</button></li>
-          <li><button onClick={()=>guessCounty('ESSEX')}>Essex</button></li>
-          <li><button onClick={()=>guessCounty('FRANKLIN')}>Franklin</button></li>
-          <li><button onClick={()=>guessCounty('GRAND ISLE')}>Grand Isle</button></li>
-          <li><button onClick={()=>guessCounty('LAMOILLE')}>Lamoille</button></li>
-          <li><button onClick={()=>guessCounty('ORANGE')}>Orange</button></li>
-          <li><button onClick={()=>guessCounty('ORLEANS')}>Orleans</button></li>
-          <li><button onClick={()=>guessCounty('RUTLAND')}>Rutland</button></li>
-          <li><button onClick={()=>guessCounty('WASHINGTON')}>Washington</button></li>
-          <li><button onClick={()=>guessCounty('WINDHAM')}>Windham</button></li>
-          <li><button onClick={()=>guessCounty('WINDSOR')}>Windsor</button></li>
-        </ul>
+          <button onClick={()=>guessCounty('ADDISON')}>Addison</button>
+          <button onClick={()=>guessCounty('BENNINGTON')}>Bennington</button>
+          <button onClick={()=>guessCounty('CALEDONIA')}>Caledonia</button>
+          <button onClick={()=>guessCounty('CHITTENDEN')}>Chittenden</button>
+          <button onClick={()=>guessCounty('ESSEX')}>Essex</button>
+          <button onClick={()=>guessCounty('FRANKLIN')}>Franklin</button>
+          <button onClick={()=>guessCounty('GRAND ISLE')}>Grand Isle</button>
+          <button onClick={()=>guessCounty('LAMOILLE')}>Lamoille</button>
+          <button onClick={()=>guessCounty('ORANGE')}>Orange</button>
+          <button onClick={()=>guessCounty('ORLEANS')}>Orleans</button>
+          <button onClick={()=>guessCounty('RUTLAND')}>Rutland</button>
+          <button onClick={()=>guessCounty('WASHINGTON')}>Washington</button>
+          <button onClick={()=>guessCounty('WINDHAM')}>Windham</button>
+          <button onClick={()=>guessCounty('WINDSOR')}>Windsor</button>
+        
     </div>
 
 }

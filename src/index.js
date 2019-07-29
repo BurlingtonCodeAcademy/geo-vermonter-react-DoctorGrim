@@ -6,6 +6,8 @@ import GameSettings from "./start-menu.js";
 import Stats from "./stats.js";
 import MapNav from "./map-nav.js";
 import GameNav from "./game-nav.js";
+import SubmitScore from "./submit-score.js"
+import Leaderboard from "./leaderboard.js"
 import { tsExternalModuleReference } from "@babel/types";
 
 class App extends React.Component {
@@ -18,7 +20,8 @@ class App extends React.Component {
       startPosition: null,
       score: 100,
       mapZoom: 7,
-      gameStatus: false
+      gameStatus: false,
+      isGameWon: false, 
       //history array??
     };
   }
@@ -103,6 +106,11 @@ class App extends React.Component {
           corectCounty={this.state.corectCounty}
           isGamePlaying={this.state.gameStatus}
         />
+         <SubmitScore 
+         isGameWon={this.state.isGameWon}
+         console={this.state.corectCounty}
+         score={this.state.score} />
+      <Leaderboard />
       </div>
     );
   }
