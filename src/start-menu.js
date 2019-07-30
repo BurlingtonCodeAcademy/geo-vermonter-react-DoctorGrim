@@ -37,11 +37,11 @@ const GameSettings = ({ startGame, giveUp, isGamePlaying }) => {
 
     let vtCountyData = L.geoJSON(countyData);
 
-    let test=leafletPip.pointInLayer(
+    let countyArr=leafletPip.pointInLayer(
         [location.long, location.lat],
         vtCountyData)
 
-        return test[0].feature.properties.CNTYNAME
+        return countyArr[0].feature.properties.CNTYNAME
     };
 
 

@@ -5,8 +5,6 @@ class SubmitScore extends React.Component {
     super();
     this.state = {
       name: "",
-      date: null,
-      input: ""
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -14,28 +12,27 @@ class SubmitScore extends React.Component {
 
   async handleSubmit(evt) {
     evt.preventDefault();
-    const response = await fetch("/message", {
+    const response = await fetch("/scores", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ name: this.state.input, date: this.state.date, score: this.props.score })
+      body: JSON.stringify({ name: this.state.name, score: this.props.score })
     });
     const result = await response.text();
     console.log("Result is: ", result);
     if (result === "Success") {
-      const nextResponse = await fetch("/message");
+      const nextResponse = await fetch("/scores");
       const json = nextResponse.json();
       this.setState({
         name: json.message,
-        date: json.date
       });
     }
   }
 
   handleInputChange(e) {
     this.setState({
-      input: e.target.value
+        name: e.target.value
     });
   }
 
